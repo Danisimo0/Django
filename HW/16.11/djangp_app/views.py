@@ -247,4 +247,4 @@ def todo_delete(request: HttpRequest, pk: int) -> HttpResponse:
 
 def controller_test(request: HttpRequest) -> HttpResponse:
     context = {}
-    return render(request, 'django_app/testcontroller.html', context=context)
+    return render(request, 'django_app/test.html', context=context)
