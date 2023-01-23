@@ -9,7 +9,7 @@ from django_app import models
 
 import psycopg2
 import requests
-from bs4 import BeautifulSoup
+
 
 
 # Create your views here.
@@ -20,7 +20,7 @@ class HomeView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         context = {}
-        # return HttpResponse(content=b"<h1>Hello World</h1>")
+       
         # return JsonResponse(data={"response": 'res'}, safe=True)
         return render(request, 'django_app/home.html', context=context)
 
@@ -109,7 +109,7 @@ def post_pk_view(request: HttpRequest, pk: int) -> HttpResponse:
         context = {}
         return render(request, 'django_app/post_detail.html', context=context)
     context = {}
-    # return HttpResponse(content=b"<h1>Hello World</h1>")
+
     # return JsonResponse(data={"response": 'res'}, safe=True)
     return render(request, 'django_app/post_list.html', context=context)
 
@@ -170,7 +170,7 @@ def profile(request):
 
 
 def json_page(request):
-    users = [{"name": f"Dimash ({x})", "age": x} for x in range(1, 8)]
+    users = [{"name": f"Name({x})", "age": x} for x in range(1, 8)]
     print(users)
 
     return JsonResponse({"Your information": users})
