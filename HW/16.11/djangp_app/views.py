@@ -16,25 +16,25 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 
-class HomeView(View):  # TODO контроллер класс
+class HomeView(View):
     template_name = 'django_app/home.html'
 
     def get(self, request: HttpRequest) -> HttpResponse:
         context = {}
-        # return HttpResponse(content=b"<h1>Hello World</h1>")
+
         # return JsonResponse(data={"response": 'res'}, safe=True)
         return render(request, 'django_app/home.html', context=context)
 
     def post(self, request: HttpRequest) -> HttpResponse:
         context = {}
-        # return HttpResponse(content=b"<h1>Hello World</h1>")
+
         # return JsonResponse(data={"response": 'res'}, safe=True)
         return render(request, 'django_app/home.html', context=context)
 
 
-def home_view(request: HttpRequest) -> HttpResponse:  # TODO контроллер функция
+def home_view(request: HttpRequest) -> HttpResponse:
     context = {}
-    # return HttpResponse(content=b"<h1>Hello World</h1>")
+
     # return JsonResponse(data={"response": 'res'}, safe=True)
     return render(request, 'django_app/home.html', context=context)
 
@@ -47,7 +47,6 @@ def register(request: HttpRequest) -> HttpResponse:
         return render(request, 'django_app/register.html', context=context)
     elif request.method == "POST":
 
-        # TODO получить с формы данные
         first_name = request.POST.get('first_name', "")
         last_name = request.POST.get('last_name', "")
         username = request.POST.get('username', None)
@@ -55,7 +54,7 @@ def register(request: HttpRequest) -> HttpResponse:
         password2 = request.POST.get('password2', "")
 
         if password1 and password1 != password2:
-            raise Exception("пароли не совпадают!")
+            raise Exception("Passwords don't match!!")
         if username and password1:
             User.objects.create(
                 first_name=first_name,
@@ -65,12 +64,11 @@ def register(request: HttpRequest) -> HttpResponse:
             )
             return redirect(reverse('django_app:login', args=()))
         else:
-            raise Exception("данные не заполнены!")
+            raise Exception("Data isn't filled!")
 
 
 def login(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-
         email = request.POST.get("email")
         password = request.POST.get("password")
 
@@ -110,7 +108,7 @@ def post_pk_view(request: HttpRequest, pk: int) -> HttpResponse:
         context = {}
         return render(request, 'django_app/post_detail.html', context=context)
     context = {}
-    # return HttpResponse(content=b"<h1>Hello World</h1>")
+
     # return JsonResponse(data={"response": 'res'}, safe=True)
     return render(request, 'django_app/post_list.html', context=context)
 
@@ -123,12 +121,12 @@ def home_main(request: HttpRequest) -> HttpResponse:
 def post_comment_create(request: HttpRequest, pk: int) -> HttpResponse:
     if request.method == "POST":
         text = request.POST.get('text', None)
-        post = models.Post.objects.get(id=pk)  # определить, к какой статье создали комментарий
+        post = models.Post.objects.get(id=pk)
         models.PostComment.objects.create(
             user=request.User,
             article=post,
             text=text,
-            # date_time=timezone.now(), # у нас стоит default
+            # date_time=timezone.now()
         )
         return redirect(reverse('django_app:post_detail', args=(pk,)))
 
@@ -181,7 +179,7 @@ def profileupdate(request):
 
 
 def json_page(request):
-    users = [{"name": f"Name ({x})", "age": x} for x in range(1, 8)]
+    users = [{"name": f"AnyName ({x})", "age": x} for x in range(1, 8)]
     print(users)
 
     return JsonResponse({"Your information": users})
@@ -205,6 +203,7 @@ def todo_create(request: HttpRequest) -> HttpResponse:
         )
         return redirect(reverse('django_app:todo_list', args=()))
 
+
 class CustomPaginator:
     @staticmethod
     def paginate(object_list: any, per_page=5, page_number=1):
@@ -216,7 +215,6 @@ class CustomPaginator:
         except EmptyPage:
             page = paginator_instance.page(number=paginator_instance.num_pages)
         return page
-
 
 
 def todo_list(request: HttpRequest) -> HttpResponse:
@@ -250,5 +248,3 @@ def todo_delete(request: HttpRequest, pk: int) -> HttpResponse:
 def controller_test(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'django_app/testcontroller.html', context=context)
-
-

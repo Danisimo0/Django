@@ -20,7 +20,7 @@ class HomeView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         context = {}
-       
+
         # return JsonResponse(data={"response": 'res'}, safe=True)
         return render(request, 'django_app/home.html', context=context)
 
