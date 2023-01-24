@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<p>Rendered text with {{ pub_date|date:"c" }}</p>
+{% comment "Optional note" %}
+    <p>Commented out text with {{ create_date|date:"c" }}</p>
+{% endcomment %}
+
+
+<tr>
+    <td class="{% cycle 'row1' 'row2' as rowcolors %}">Hello</td>
+    <td class="{{ rowcolors }}">Hello</td>
+</tr>
+<tr>
+    <td class="{% cycle rowcolors %}">Hello</td>
+    <td class="{{ rowcolors }}">Hello</td>
+</tr>
+<p>
+{% filter force_escape|lower %}
+   Change your text size
+{% endfilter %}
+</p>
+</body>
+</html>
