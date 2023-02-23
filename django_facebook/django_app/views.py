@@ -89,4 +89,3 @@ class GetUsers(View):
         # await asyncio.sleep(1)
         print(User.objects.filter(is_active=True))
         return HttpResponse("Hello World!")
-    
