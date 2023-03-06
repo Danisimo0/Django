@@ -1,14 +1,40 @@
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 # Create your models here.
+
 
 class Post(models.Model):
     title = models.CharField('Заголовок', max_length=200)
     description = models.TextField('Описание', default="")
 
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-title',)
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+        # db_table = 'comment_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.title} | {self.description}"
+
+    def pretty(self):
+        return f"{self.title}"
+
+    @staticmethod
+    def get_by_id(pk: int):
+        if pk < 0:
+            raise ValueError("value is too small!")
+        return Post.objects.get(id=pk)
+
+    def get_this_post_comments(self):
+        return PostComment.objects.filter(article=self)
+
+    def get_this_post_is_like(self, user):
+        return len(PostLike.objects.filter(article=self, author=user, status=True)) > 0
 
 
 class Task(models.Model):
@@ -18,7 +44,6 @@ class Task(models.Model):
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE
-
     )
 
     title = models.CharField(
@@ -104,7 +129,6 @@ class Task(models.Model):
         auto_now_add=False,
     )
 
-
     class Meta:
         app_label = 'app_django'
         ordering = ('-updated',)
@@ -118,3 +142,69 @@ class Task(models.Model):
         else:
             completed = "Неактивно"
         return f"{self.title} | {self.description[0:30]}... | {completed} | {self.updated}"
+
+
+class PostComment(models.Model):
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-date',)
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comment'
+        # db_table = 'comment_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.article} | {self.author} | {self.date} | {self.description}"
+
+
+class PostLike(models.Model):
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField()
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-id',)
+        verbose_name = 'Like'
+        verbose_name_plural = 'Likes'
+        db_table = 'like_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.article} | {self.author} | {self.status}"
+
+
+CHOICES = (
+    ("1", "DANGER"),
+    ("2", "WARNING"),
+    ("3", "LIGHT"),
+    ("4", "INFO"),
+)
+
+
+class LogModel(models.Model):
+    """
+    Модель дл хранения как ошибок, так и просто действий пользователя
+    """
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=False, db_index=True)
+    method = models.CharField(max_length=7)  # GET POST PUT PATCH OPTIONS HEAD
+    status = models.IntegerField(
+        validators=[MinValueValidator(100), MaxValueValidator(600)])  # GET POST PUT PATCH OPTIONS HEAD
+    url = models.CharField(max_length=300, default="")
+    description = models.CharField(max_length=500)
+    datetime = models.DateTimeField(default=timezone.now, db_index=True)
+    # level = models.TextChoices(GEEKS_CHOICES)
+    level = models.CharField(max_length=50, choices=CHOICES, default="4")
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-datetime', 'url')
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'
+        # db_table = 'log_model_table'
+
+    def __str__(self):
+        return f"{self.datetime} | {self.status} | {self.url} | {self.user}"

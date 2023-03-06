@@ -1,0 +1,127 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+{% load app_django_extras %}
+{% today True as develop %}
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='Home page' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}Register{% endblock header %}
+
+{% block description %}this page contains global information about project{% endblock description %}
+
+{% block main %}
+
+<div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{post.title}}</text></svg>
+            <div class="card-body">
+              <p class="card-text">{{post.description}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+
+                </div>
+                <small class="text-muted">9 mins </small>
+
+                <small class="text-muted">status:
+
+                    {% if post_like %}
+                        <i class="fa-solid btn btn-sm btn-success fa-heart"></i>
+                    {% else %}
+                        <i class="fa-solid btn btn-sm btn-outline-success fa-heart"></i>
+                    {% endif %}
+
+                    {% is_my_like post.id as val1 %}
+                    {% if val1 %}
+                        <i class="fa-solid btn btn-sm btn-success fa-heart"></i>
+                    {% else %}
+                        <i class="fa-solid btn btn-sm btn-outline-success fa-heart"></i>
+                    {% endif %}
+
+                </small>
+              </div>
+            </div>
+          </div>
+
+
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<form action="{% url 'app_name_task_list:post_comment_create' post.id %}"
+                  method="POST"
+                  target="_self"
+                  enctype="multipart/form-data"
+                  name="idea_create"
+                  autocomplete="on"
+                  class="text-center"
+        >
+            {% csrf_token %}
+                        <input type="hidden"
+                               name="ids"
+                               value="{{ post.id }}"
+                                required
+                               class="form-control form-control-sm"
+                        />
+
+                                <label class="form-control-sm w-50 m-1">
+                        Введите свой комментарий:
+                        <input type="text"
+                               name="description"
+                               required=""
+                               value=""
+                               minlength="1"
+                               maxlength="300"
+                               class="form-control form-control-sm"
+                        />
+                        <small class="text-muted">кол-во символов: <= 500</small>
+                    </label>
+            <li class="m-1">
+                <button class="btn btn-sm btn-outline-primary" type="submit">submit</button>
+            </li>
+            </form>
+
+
+
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-5 fw-semibold">List group</span>
+    </a>
+    <div class="list-group list-group-flush border-bottom scrollarea">
+        {% for i in post.get_this_post_comments %}
+      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <strong class="mb-1">{{ i.author}}</strong>
+          <small class="text-muted">{{i.date}}</small>
+        </div>
+        <div class="col-10 mb-1 small">{{i.description}}</div>
+      </a>
+
+        {% endfor %}
+    </div>
+  </div>
+
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}
+
