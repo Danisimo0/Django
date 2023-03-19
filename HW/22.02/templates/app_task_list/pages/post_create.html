@@ -1,0 +1,30 @@
+{% block main %}
+    {% block prestyles %}{% endblock prestyles %}
+    <link href="/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/fontawesome/css/all.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <div class="container container-fluid">
+<i class="fa-solid fa-user"></i>
+        <i class="fa-solid fa-comment"></i>
+        <main class="form-signin">
+            {% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+  <form action="{% url 'app_name_task_list:post_create' %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+      {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Add your new post!</h1>
+        Title:
+      <input type="text" class="form-control m-3" placeholder="Enter here your title" name="title">
+      Description:
+      <textarea type="text" class="form-control m-3" rows="5" name="description" placeholder="Enter here your discription"></textarea>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Post</button>
+  </form>
+</main>
+
+
+    </div>
+
+{% endblock main %}
