@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from typing import List, Union
 import psycopg2
-
+from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import declarative_base
 app = FastAPI()
 
 

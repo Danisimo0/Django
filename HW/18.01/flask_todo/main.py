@@ -1,8 +1,8 @@
 from flask import Flask, request
 import psycopg2
-
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-
+db = SQLAlchemy(app)
 
 # думал сначала сюда записать 1 базу, а потом ее цеплять ко всем функциям,
 # потом понял что лучше к каждой функции подключать разные
