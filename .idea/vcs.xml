@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Django_on_Ubuntu" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/HW/django_docker" vcs="Git" />
   </component>
 </project>
