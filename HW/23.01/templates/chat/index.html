@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat</h1>
+    <script>
+        var roomName = 'test';
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/' + roomName + '/');
+        chatSocket.onmessage = function(event) {
+            console.log(event.data);
+        };
+        chatSocket.onclose = function(event) {
+            console.error('WebSocket closed unexpectedly');
+        };
+    </script>
+</body>
+</html>
