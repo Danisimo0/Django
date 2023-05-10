@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Default Title{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      {% block header %}
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      {% endblock %}
+    </header>
+
+    <main>
+      {% block content %}
+      <p>This is the default content.</p>
+      {% endblock %}
+    </main>
+
+    <footer>
+      {% block footer %}
+      <p>Default footer content.</p>
+      {% endblock %}
+    </footer>
+  </body>
+</html>
+<!--. Мы использовали теги блоков Django, чтобы определить, где будут вставлены уникальные контентные блоки.-->

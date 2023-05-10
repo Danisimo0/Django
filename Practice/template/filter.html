@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+{% load static custom_filters_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Template</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Custom Template</h1>
+    <p>Today is {{ today|date:"Y-m-d" }}</p>
+    {% if today|date:"m" == "05" %}
+        <p>It's May!</p>
+    <p>{{ post.pub_date|convert_date }}</p>
+    {% endif %}
+    <p>The reversed string of "Hello, world!" is "{{ "Hello, world!"|reverse_string }}".</p>
+    <p>This post has {% get_comment_count post as comment_count %}{{ comment_count }} comments.</p>
+
+</body>
+</html>
