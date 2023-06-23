@@ -1,0 +1,55 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Python
+*.pyc
+*.pyo
+__pycache__
+
+# Django
+*.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.bak
+*.db
+*.cache
+*.log
+*.pyc
+*.swp
+local_settings.py
+
+# Environment
+.env
+
+# IDE/Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependency directories
+venv/
+env/
+env1/
+env2/
+env3/
+/env/
+\env\
+.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+\.idea\
+\idea\
+.idea

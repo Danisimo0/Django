@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans 'Авторизация' %}
+{% endblock %}
+
+{% block content %}
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="sign__content">
+						<!-- authorization form -->
+						<form class="sign__form" method="post">
+                            {% csrf_token %}
+                            <a href="{% url 'home' %}" class="sign__logo"></a>
+
+
+							  {% if form.errors %}
+								{% for field in form %}
+									{% for error in field.errors %}
+										<strong style="color: #f8f8f2">{{ error|escape }}</strong>
+									{% endfor %}
+								{% endfor %}
+								{% for error in form.non_field_errors %}
+										<strong style="color: #f8f8f2">{{ error|escape }}</strong>
+								{% endfor %}
+								{% endif %}
+							<div class="sign__group">
+								{{ form.username }}
+							</div>
+
+							<div class="sign__group">
+                                {{ form.password }}
+							</div>
+
+							<div class="sign__group sign__group--checkbox">
+								<input id="remember" name="remember" type="checkbox" checked="checked">
+								<label for="remember">{% trans 'Запомнить меня' %}</label>
+							</div>
+
+							<button class="sign__btn" type="submit">{% trans 'Войти' %}</button>
+
+							<span class="sign__text">{% trans 'Еще нет аккаунта?' %} <a href="{% url 'register' %}">{% trans 'Зарегистрироваться!' %}</a></span>
+
+							<span class="sign__text"><a href="{% url 'password_reset' %}">{% trans 'Забыли пароль?' %}</a></span>
+						</form>
+						<!-- end authorization form -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}

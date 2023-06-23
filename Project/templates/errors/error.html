@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<div class="page-error section--bg" data-bg="{% static 'img/section/section.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-error__wrap">
+                    <div class="page-error__content">
+                        <h1 class="page-error__title">{% trans 'Ошибка' %}</h1>
+                        <p class="page-error__text">{% trans 'Произошла ошибка при выполнении вашего запроса.' %}</p>
+                        <p class="page-error__error-info">{% trans 'Дополнительная информация об ошибке:' %} {{ exception }}</p>
+                        <a href="{% url 'home' %}" class="page-error__btn page-error__btn--animated">{% trans 'Домой' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

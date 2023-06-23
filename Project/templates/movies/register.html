@@ -1,0 +1,67 @@
+{% load i18n %}
+
+
+
+{% block title %}
+    {% trans 'Registration' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sign__content">
+                    <form class="sign__form" method="post">
+                        {% csrf_token %}
+                        <a href="{% url 'home' %}" class="sign__logo">
+
+                        </a>
+                        {% if form.errors %}
+                            {% for error in form.non_field_errors %}
+                                <strong style="color: #f8f8f2">{{ error|escape }}</strong>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% with field=form.email %}
+                            <div class="sign__group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endwith %}
+
+                        {% with field=form.username %}
+                            <div class="sign__group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endwith %}
+
+                        {% with field=form.password1 %}
+                            <div class="sign__group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endwith %}
+
+                        {% with field=form.password2 %}
+                            <div class="sign__group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endwith %}
+
+                        <div class="sign__group sign__group--checkbox">
+                            <input id="remember" name="remember" type="checkbox" checked="checked">
+                            <label for="remember">{% trans 'I agree to the' %} <a href="#">{% trans 'Privacy Policy' %}</a></label>
+                        </div>
+
+                        <button class="sign__btn" type="submit">{% trans 'Registration' %}</button>
+
+                        <span class="sign__text">{% trans 'Already registered?' %} <a href="{% url 'login' %}">{% trans 'Sign in!' %}</a></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

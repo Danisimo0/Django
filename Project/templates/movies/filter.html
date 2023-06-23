@@ -1,0 +1,44 @@
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <!-- Подключение стилей Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+        <form method="GET" action="{% url 'search' %}">
+            <div class="input-group mb-3">
+                <label>
+                    <input type="text" name="query" class="form-control" placeholder="Enter search query">
+                </label>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+
+        {% if results %}
+            <h2>Search Results for "{{ query }}"</h2>
+            <ul class="list-group">
+                {% for result in results %}
+                    <li class="list-group-item">
+                        <a href="{{ result.get_absolute_url }}">{{ result.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found for "{{ query }}".</p>
+        {% endif %}
+    </div>
+
+    <!-- Подключение скриптов Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load i18n static rating_movies recaptcha3 social_share cache %}
+
+{% block title %}
+    {{ movie.title }}
+{% endblock %}
+
+{% block content %}
+    <!-- details -->
+    <section class="section details">
+        <!-- details background -->
+        <div class="details__bg" data-bg="{% static 'img/home/home__bg.jpg' %}"></div>
+        <!-- end details background -->
+
+        <!-- details content -->
+        <div class="container">
+            <div class="row">
+                <!-- title -->
+                <div class="col-12">
+                    <h1 class="details__title">{{ movie.title }}</h1>
+                </div>
+                <!-- end title -->
+
+                <!-- content -->
+                <div class="col-10">
+                    <div class="card card--details card--series">
+                        <div class="row">
+                            <!-- card cover -->
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                <div class="card__cover">
+                                    <img src="{{ movie.poster.url }}" alt="">
+                                </div>
+                            </div>
+                            <!-- end card cover -->
+
+                            <!-- card content -->
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
+                                <div class="card__content">
+                                    <div class="card__wrap">
+                                        <span class="card__rate">
+                                            <i class="icon ion-ios-star"></i>
+                                            {% get_movie_rating movie.id %}
+                                        </span>
+
+                                        <ul class="card__list">
+                                            <li>{{ movie.category }}</li>
+                                        </ul>
+                                    </div>
+
+                                    <ul class="card__meta">
+                                        {% if movie.tagline %}
+                                            <li>
+                                                <span>{% trans 'Tagline' %}:</span>
+                                                {{ movie.tagline }}
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <span>{% trans 'Genre' %}:</span>
+                                            {% for item in movie.genres.all %}
+                                                <a href="{{ item.get_absolute_url }}">{{ item.name|title }}</a>
+                                            {% endfor %}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Director' %}:</span>
+                                            {% for item in movie.directors.all %}
+                                                <a href="{% url 'director_detail' item.slug 1 %}">{{ item.name|title }}</a>
+                                            {% endfor %}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Actors' %}:</span>
+                                            {% for item in movie.actors.all %}
+                                                <a href="{{ item.get_absolute_url }}">{{ item.name|title }}</a>
+                                            {% endfor %}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Kinopoisk Rating' %}:</span>★ {{ movie.kinopoisk_rating }}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'World Premiere' %}:</span> {{ movie.world_premiere }}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Duration' %}:</span> {{ movie.duration }}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Country' %}:</span> {{ movie.country }}
+                                        </li>
+                                        <li>
+                                            <span>{% trans 'Language' %}:</span> {{ movie.language }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- end card content -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end content -->
+            </div>
+        </div>
+        <!-- end details content -->
+    </section>
+    <!-- end details -->
+
+    <!-- description -->
+    <section class="section description">
+        <!-- description background -->
+        <div class="description__bg" data-bg="{% static 'img/home/home__bg.jpg' %}"></div>
+        <!-- end description background -->
+
+        <!-- description content -->
+        <div class="container">
+            <div class="row">
+                <!-- title -->
+                <div class="col-12">
+                    <h2 class="description__title">{% trans 'Overview' %}</h2>
+                </div>
+                <!-- end title -->
+
+                <!-- content -->
+                <div class="col-12">
+                    <p class="description__text">{{ movie.description }}</p>
+                </div>
+                <!-- end content -->
+            </div>
+        </div>
+        <!-- end description content -->
+    </section>
+    <!-- end description -->
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load i18n static rating_movies %}
+
+{% block title %}
+    {% trans 'Main page' %}
+{% endblock %}
+
+{% block content %}
+    <!-- home -->
+    <section class="home">
+        <!-- home bg -->
+        <div class="owl-carousel home__bg">
+            {% for bg_image in bg_images %}
+                <div class="item home__cover" data-bg="{{ bg_image }}"></div>
+            {% endfor %}
+        </div>
+        <!-- end home bg -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="home__title"><b>{% trans 'Лучшие фильмы' %}</b> {% trans 'этого сезона' %}</h1>
+
+                    <button class="home__nav home__nav--prev" type="button">
+                        <i class="icon ion-ios-arrow-round-back"></i>
+                    </button>
+                    <button class="home__nav home__nav--next" type="button">
+                        <i class="icon ion-ios-arrow-round-forward"></i>
+                    </button>
+                </div>
+
+                <div class="col-12">
+                    <div class="owl-carousel home__carousel">
+                        {% for movie in carousel_list %}
+                            <div class="item">
+                                <!-- card -->
+                                <div class="card card--big">
+                                    <div class="card__cover">
+                                        <img src="{{ movie.poster.url }}" alt="">
+                                        <a href="{{ movie.get_absolute_url }}" class="card__play">
+                                            <i class="icon ion-ios-play"></i>
+                                        </a>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title">
+                                            <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>
+                                        </h3>
+                                        <span class="card__category">
+                                            {% for item in movie.genres.all|slice:":3" %}
+                                                <a href="#">{{ item.name|title }}</a>
+                                            {% endfor %}
+                                        </span>
+                                        <span class="card__rate">
+                                            <i class="icon ion-ios-star"></i>{{ movie.kinopoisk_rating }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end home -->
+
+    <!-- content -->
+    <section class="content">
+        <div class="content__head">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- content title -->
+                        <h2 class="content__title">{% trans 'Новинки' %}</h2>
+                        <!-- end content title -->
+
+                        <!-- content tabs nav -->
+                        <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+                            {% for tab in tabs %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if tab.active %}active{% endif %}" data-toggle="tab"
+                                       href="#{{ tab.id }}" role="tab" aria-controls="{{ tab.id }}"
+                                       aria-selected="{{ tab.active }}">
+                                        {% trans tab.label %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- end content tabs nav -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- content tabs -->
+            <div class="tab-content" id="myTabContent">
+                {% for tab in tabs %}
+                    <div class="tab-pane fade {% if tab.active %}show active{% endif %}" id="{{ tab.id }}"
+                         role="tabpanel" aria-labelledby="{{ tab.id }}-tab">
+                        <div class="row">
+                            {% for movie in tab.movies %}
+                                <!-- card -->
+                                <div class="col-6 col-sm-12 col-lg-6">
+                                    <div class="card card--list">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-4">
+                                                <div class="card__cover">
+                                                    <img src="{{ movie.poster.url }}" alt="">
+                                                    <a href="{{ movie.get_absolute_url }}" class="card__play">
+                                                        <i class="icon ion-ios-play"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-8">
+                                                <div class="card__content">
+                                                    <h3 class="card__title">
+                                                        <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>
+                                                    </h3>
+                                                    <span class="card__category">
+                                                        {% for item in movie.genres.all|slice:":3" %}
+                                                            <a href="{{ item.get_absolute_url }}">
+                                                                {{ item.name|title }}
+                                                            </a>
+                                                        {% endfor %}
+                                                    </span>
+
+                                                    <div class="card__wrap">
+                                                        <span class="card__rate">
+                                                            <i class="icon ion-ios-star"></i>
+                                                            {{ movie.kinopoisk_rating }}
+                                                        </span>
+
+                                                        <ul class="card__list">
+                                                            <li>{{ movie.category }}</li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="card__description">
+                                                        <p>{{ movie.description }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- end content tabs -->
+        </div>
+    </section>
+    <!-- end content -->
+{% endblock %}

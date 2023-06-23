@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<div class="page-500 section--bg" data-bg="{% static 'img/section/section.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-500__wrap">
+                    <div class="page-500__content">
+                        <h1 class="page-500__title">500</h1>
+                        <p class="page-500__text">{% trans 'Внутренняя ошибка сервера!' %}</p>
+                        <p class="page-500__error-info">{% trans 'Дополнительная информация об ошибке:' %} {{ exception }}</p>
+                        <a href="{% url 'home' %}" class="page-500__btn page-500__btn--animated">{% trans 'Домой' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

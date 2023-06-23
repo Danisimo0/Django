@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<div class="page-403 section--bg" data-bg="{% static 'img/section/section.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-403__wrap">
+                    <div class="page-403__content">
+                        <h1 class="page-403__title">403</h1>
+                        <p class="page-403__text">{% trans 'Доступ запрещен!' %}</p>
+                        <p class="page-403__error-info">{% trans 'Дополнительная информация об ошибке:' %} {{ exception }}</p>
+                        <a href="{% url 'home' %}" class="page-403__btn page-403__btn--animated">{% trans 'Домой' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
