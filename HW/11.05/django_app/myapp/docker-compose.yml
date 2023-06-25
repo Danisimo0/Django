@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./django_app:/app
+    depends_on:
+      - flask
+      - fastapi
+
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    volumes:
+      - ./flask_app.py:/app/app.py
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:8000
+    volumes:
+      - ./main.py:/app/main.py
