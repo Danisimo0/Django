@@ -1,0 +1,115 @@
+# from django.shortcuts import render
+
+# Create your views here.
+# 1
+from collections import Counter
+
+
+def determine_winner(candidates, votes):
+    vote_count = Counter(votes)
+
+    max_votes = max(vote_count.values())
+
+    winners = [candidate for candidate, count in vote_count.items() if count == max_votes]
+
+    if len(winners) == 1:
+        return winners[0]
+
+    winners.sort(key=len)
+    return winners[0]
+
+
+candidates = ['Candidate A', 'Candidate B', 'Candidate C']
+votes = ['Candidate A', 'Candidate B', 'Candidate A', 'Candidate C', 'Candidate B', 'Candidate C', 'Candidate C']
+
+winner = determine_winner(candidates, votes)
+winner_votes = votes.count(winner)
+
+print(f"The winner is {winner} with {winner_votes} votes.")
+
+
+# 2
+class MainClass:
+    def __init__(self, text):
+        self.text = text
+
+    def set_text(self, text=None):
+        if text is not None:
+            self.text = text
+        else:
+            self.text = ""
+
+    def print_text(self):
+        print(self.text)
+
+
+class SubClass(MainClass):
+    def __init__(self, text, number):
+        super().__init__(text)
+        self.number = number
+
+    def print_number(self):
+        print(self.number)
+
+
+main_obj = MainClass("Hello")
+main_obj.print_text()  # Вывод: Hello
+
+main_obj.set_text("World")
+main_obj.print_text()  # Вывод: World
+
+sub_obj = SubClass("Hello", 42)
+sub_obj.print_text()  # Вывод: Hello
+sub_obj.print_number()  # Вывод: 42
+
+sub_obj.set_text("World")
+sub_obj.print_text()  # Вывод: World
+
+
+# 3
+
+
+class MainClass:
+    def __init__(self, text):
+        self._text = text
+
+    def set_text(self, text=None):
+        if text is not None:
+            self._text = text
+        else:
+            self._text = ""
+
+    def print_text(self):
+        print(self._text)
+
+
+class SubClass(MainClass):
+    def __init__(self, text, number):
+        super().__init__(text)
+        self._number = number
+
+    def print_number(self):
+        print(self._number)
+
+    def set_text(self, text=None):
+        if text is not None:
+            self._text = text.lower()
+        else:
+            self._text = ""
+
+    def print_text(self):
+        print(self._text.upper())
+
+
+main_obj = MainClass("Hello")
+main_obj.print_text()  # Вывод: Hello
+
+main_obj.set_text("World")
+main_obj.print_text()  # Вывод: World
+
+sub_obj = SubClass("Hello", 42)
+sub_obj.print_text()  # Вывод: Hello
+sub_obj.print_number()  # Вывод: 42
+
+sub_obj.set_text("World")
+sub_obj.print_text()  # Вывод: WORLD
